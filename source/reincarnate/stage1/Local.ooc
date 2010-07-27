@@ -5,8 +5,8 @@ import reincarnate/[FileSystem, Usefile, Version]
 import reincarnate/stage1/Stage1
 
 LocalS1: class extends Stage1 {
-    init: super func
-
+    init: func (=app) {}
+    
     getUsefile: func (location, ver, variant: String) -> Usefile {
         reader := FileReader new(location)
         /* TODO: version check */

@@ -11,7 +11,8 @@ import uriparser/UriParser
 import reincarnate/App
  
 NetError: class extends Exception {
-    init: super func
+    init: func ~originMsg (=origin, =msg) {}
+    init: func ~noOrigin (=msg) {}
 }
  
 Net: class {

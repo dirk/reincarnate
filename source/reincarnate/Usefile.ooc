@@ -3,7 +3,8 @@ import io/Reader
 import text/[StringTokenizer, Buffer]
  
 UsefileParseError: class extends Exception {
-    init: super func
+    init: func ~originMsg (=origin, =msg) {}
+    init: func ~noOrigin (=msg) {}
 }
  
 Usefile: class extends HashMap<String, String> {
@@ -35,7 +36,7 @@ Usefile: class extends HashMap<String, String> {
     readUsefile: func ~fromString (str: String) {
         key, value: String
         for(line: String in str split('\n')) {
-            if(line length() > 0 && !line startsWith("#")) { /* ignore empty lines and comments */
+            if(line length() > 0 && !line startsWith?("#")) { /* ignore empty lines and comments */
                 _splitLine(line, key&, value&)
                 this[key] = value
             }

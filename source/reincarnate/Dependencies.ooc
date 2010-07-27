@@ -41,7 +41,7 @@ Requirement: class {
     }
 
     fromString: func (s: String) {
-        if(s contains('=') || s contains('>') || s contains('<')) {
+        if(s contains?('=') || s contains?('>') || s contains?('<')) {
             /* contains a version. */
             SLUG := 1
             OP := 2
@@ -118,13 +118,13 @@ Requirements: class extends ArrayList<Requirement> {
                 loc = requirement slug
             add := true
             for(lloc: String in locations) {
-                if(lloc equals(loc)) {
+                if(lloc equals?(loc)) {
                     add = false
                     break
                 }
             }
             if(add)
-                locations add(loc as Requirement)
+                locations add(loc as String)
         }
         return locations
     }

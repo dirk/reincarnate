@@ -48,7 +48,7 @@ Nirvana: class {
         value := parser getValue(ValueMap) as ValueMap /* TODO: what if we don't get a ValueMap? */
         // did we get an error?
         s := value get("__result", String)
-        if(s equals("error")) {
+        if(s equals?("error")) {
             APIException new(This, "Error when reading `%s`: %s" format(path, value get("__text", String))) throw()
         }
         value remove("__result")

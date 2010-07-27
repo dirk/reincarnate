@@ -103,11 +103,11 @@ Config: class {
         }
         top := defaults as Entity
         /* system-wide configuration? */
-        if(File new(systemFileName()) exists()) {
+        if(File new(systemFileName()) exists?()) {
             top = INIEntity new(top, systemFileName())
         }
         /* user-wide configuration? */
-        if(File new(userFileName()) exists()) {
+        if(File new(userFileName()) exists?()) {
             top = INIEntity new(top, userFileName())
         }
         /* and set it. */
@@ -122,7 +122,7 @@ Config: class {
         paths := ["Paths.oocLibs", "Paths.Yard", "Paths.Temp"] as ArrayList<String>
         for(path in paths) {
             file = get(path, File)
-            if(!file exists())
+            if(!file exists?())
                 file mkdirs()
         }
         get("GPG.Keyring", File) parent() mkdirs() /* TODO. error check? */

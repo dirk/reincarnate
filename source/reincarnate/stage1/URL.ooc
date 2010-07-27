@@ -4,7 +4,7 @@ import reincarnate/[App, FileSystem, Net, Usefile, Version]
 import reincarnate/stage1/Stage1
 
 URLS1: class extends Stage1 {
-    init: super func
+    init: func (=app) {}
 
     getUsefile: func (location, ver, variant: String) -> Usefile {
         /* TODO: version check */

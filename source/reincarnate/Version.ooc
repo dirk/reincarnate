@@ -2,12 +2,13 @@ import structs/ArrayList
 import text/[StringTokenizer, Buffer]
 
 VersionParsingError: class extends Exception {
-    init: super func
+    init: func ~originMsg (=origin, =msg) {}
+    init: func ~noOrigin (=msg) {}
 }
 
 _isDigit: func (s: String) -> Bool {
     for(c: Char in s) {
-        if(!c isDigit())
+        if(!c digit?())
             return false
     }
     return true
@@ -15,7 +16,7 @@ _isDigit: func (s: String) -> Bool {
 
 _isAlpha: func (s: String) -> Bool {
     for(c: Char in s) {
-        if(!c isAlpha())
+        if(!c alpha?())
             return false
     }
     return true
@@ -30,9 +31,9 @@ Version: cover from String extends String {
     }
     
     fromLocation: static func (location: String) -> This {
-        if(location contains('=')) {
+        if(location contains?('=')) {
             /* contains a version */
-            splitted := location split('=', 1) toArrayList()
+            splitted := location split('=', 1) toList()
             package := splitted get(0)
             ver := splitted get(1)
             if(ver == null) {
@@ -61,18 +62,18 @@ Version: cover from String extends String {
             chr := this[i]
             match state {
                 case DUNNO => {
-                    if(chr isDigit()) {
+                    if(chr digit?()) {
                         state = NUMBER
                         current append(chr)
-                    } else if(chr isAlpha()) {
+                    } else if(chr alpha?()) {
                         state = NAME
                         current append(chr)
                     }
                 }
                 case NUMBER => {
-                    if(chr isDigit()) {
+                    if(chr digit?()) {
                         current append(chr)
-                    } else if(chr isAlpha()) {
+                    } else if(chr alpha?()) {
                         /* a name follows! */
                         splitted add(current toString())
                         current = Buffer new()
@@ -86,9 +87,9 @@ Version: cover from String extends String {
                     }
                 }
                 case NAME => {
-                    if(chr isAlpha()) {
+                    if(chr alpha?()) {
                         current append(chr)
-                    } else if(chr isDigit()) {
+                    } else if(chr digit?()) {
                         /* a digit follows! */
                         splitted add(current toString())
                         current = Buffer new()
@@ -168,10 +169,10 @@ Version: cover from String extends String {
                 /* are both alpha? */
                 else if(_isAlpha(thisPart) && _isAlpha(otherPart)) {
                     for(rank: String in ALPHA_RANKS) {
-                        if(rank equals(thisPart)) {
+                        if(rank equals?(thisPart)) {
                             /* this matches before other, this is smaller. */
                             return false
-                        } else if(rank equals(otherPart)) {
+                        } else if(rank equals?(otherPart)) {
                             /* other matches before this, this is greater. */
                             return true
                         }
